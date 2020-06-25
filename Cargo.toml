@@ -8,3 +8,6 @@ edition = "2018"
 
 [dependencies]
 i8583 = "0.1.0"
+tokio = { version = "0.2", features = ["full"] }
+tokio-native-tls = "0.1.0"
+futures = "0.3"
