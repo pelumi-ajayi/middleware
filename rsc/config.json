@@ -1,0 +1,12 @@
+{
+    "in_ip": "0.0.0.0",
+    "in_port": "5003",
+    "out_ip": "",
+    "out_port": "",
+    "timeout": 100,
+    "cert": "rsc/identity.p12",
+    "cert_pin": "",
+    "accept_invalid_certs": false,
+    "accept_invalid_hostnames": false,
+    "use_sni": false
+}
