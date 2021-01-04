@@ -24,7 +24,7 @@ pub async fn handler(request: &[u8]) -> Result<Vec<u8>, String>
         Err(e) => return Err(format!("Could not build connector to host: {:?}", e))
     };
 
-    let mut host = match cx.connect("197.253.19.75", host).await {
+    let mut host = match cx.connect(app::CONFIG.out_ip.as_str(), host).await {
         Ok(host) => host,
         Err(e) => return Err(format!("Could set up TLS connection: {:?}", e))
     };

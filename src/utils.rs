@@ -28,19 +28,19 @@ pub fn dump(iso: &[u8])
 
 pub async fn read_iso8583(stream: &mut (impl AsyncRead + Unpin)) -> Result<Vec<u8>, String>
 {
-    let mut tpdu: [u8; 2] = [0; 2];
+    let mut header: [u8; 2] = [0; 2];
     
-    let n = match stream.read(&mut tpdu).await {
+    let n = match stream.read(&mut header).await {
         Ok(n) if n == 2 => {
-            u16::from_be_bytes(tpdu) as usize
+            u16::from_be_bytes(header) as usize
         }
-        Ok(n) => return Err(format!("incomplete tpdu bytes with length {} read", n)),
-        Err(e) => return Err(format!("TPDU stream read; {:?}", e))
+        Ok(n) => return Err(format!("incomplete header bytes with length {} read", n)),
+        Err(e) => return Err(format!("Header stream read; {:?}", e))
     };
 
     let len = 2 + n;
     let mut iso = Vec::with_capacity(len);
-    match tpdu.chain(stream).take(len as u64).read_to_end(&mut iso).await {
+    match header.chain(stream).take(len as u64).read_to_end(&mut iso).await {
         Ok(count) if len == count => {
             Ok(iso)
         }
