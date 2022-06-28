@@ -30,7 +30,7 @@ pub async fn read_iso8583(stream: &mut (impl AsyncRead + Unpin)) -> Result<Vec<u
 {
     let mut header: [u8; 2] = [0; 2];
     
-    let n = match stream.read(&mut header).await {
+    let n = match stream.read_exact(&mut header).await {
         Ok(n) if n == 2 => {
             u16::from_be_bytes(header) as usize
         }
